@@ -227,11 +227,16 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
         .mod-visual img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .mod-card:hover .mod-visual img {
+            transform: scale(1.02);
         }
         .mod-visual i { font-size: 4.8rem; color: #3e70e6; }
         .mod-info { padding: 1.6rem; }
@@ -283,6 +288,11 @@
             align-items: center;
             font-size: 0.9rem;
             text-decoration: none;
+            transition: all 0.2s;
+        }
+        .buy-btn:hover, .download-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(42, 92, 255, 0.4);
         }
         .download-btn {
             background: linear-gradient(105deg, #00b894, #00a884);
@@ -548,13 +558,13 @@
 </div>
 
 <script>
-    // Превью изображения для Towing Car
-    const towingCarPreview = "https://cdn.discordapp.com/attachments/1291442583033348119/1484895450124255302/ChatGPT_Image_21_._2026_._15_43_46.png?ex=69bfe427&is=69be92a7&hm=e6cc74595d12c6aa87c23f9b1dc220fd21517dfd7934a56fc5bcaf7a46e1ae47&";
-    const loadingScreenPreview = "https://cdn.discordapp.com/attachments/1291442583033348119/1484872046071648347/loadingscreen.png?ex=69bfce5b&is=69be7cdb&hm=8b25be05afe161c78e2ef24c030cf0a64e4346b64335e6d80cfc6159eb71c8f3&";
+    // ИЗМЕНЕНО: пути к изображениям — локальная папка images (GitHub)
+    const towingCarPreview = "images/towing-car.png";
+    const loadingScreenPreview = "images/loadingscreen.png";
     
     // Ссылки на скачивание (MediaFire)
-    const towingCarDownloadLink = "https://www.mediafire.com/file/q2ug24e2q779wxg/qb-loading.zip/file";
-    const loadingScreenDownloadLink = "https://www.mediafire.com/file/706aqff52mtska7/towing-car.zip/file";
+    const towingCarDownloadLink = "https://www.mediafire.com/file/706aqff52mtska7/towing-car.zip/file";
+    const loadingScreenDownloadLink = "https://www.mediafire.com/file/q2ug24e2q779wxg/qb-loading.zip/file";
     
     // Структура модов: каждый мод имеет массив ключей, каждый ключ имеет лимит активаций
     const modsCatalog = [
@@ -582,7 +592,7 @@
             id: 2, 
             title: "TOWING CAR", 
             subtitle: "Тросс для QBCORE",
-            desc: "Полноценная система троса для FiveM. Поддержка QBCore.", 
+            desc: "Полноценная система троса для FiveM. Поддержка QBCore. Реалистичная физика буксировки и удобное управление.", 
             price: 179, 
             priceFormatted: "179₽", 
             icon: "fa-truck", 
@@ -660,7 +670,8 @@
             
             let visualContent = '';
             if (mod.hasImage && mod.imageUrl) {
-                visualContent = `<img src="${mod.imageUrl}" alt="${mod.title}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas ${mod.icon}\' style=\'font-size:4.8rem;\'></i>'">`;
+                // Используем локальные изображения из папки images
+                visualContent = `<img src="${mod.imageUrl}" alt="${mod.title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas ${mod.icon}\' style=\'font-size:4.8rem;\'></i>'">`;
             } else {
                 visualContent = `<i class="fas ${mod.icon}"></i>`;
             }
