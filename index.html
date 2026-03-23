@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Gemer Presents — GTA 5 Mods Fivem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #05070f;
+            font-family: 'Space Grotesk', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at 20% 30%, #0a0f2a, #020408);
+        }
+
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(0, 80, 255, 0.08) 0%, transparent 60%);
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c1122;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3a6eff, #1a3c8a);
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            margin-top: 20px;
+            backdrop-filter: blur(20px);
+            background: rgba(5, 10, 25, 0.5);
+            border-radius: 80px;
+            border: 1px solid rgba(58, 110, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #5d8eff, #2b4bc0);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        .logo span {
+            font-size: 0.85rem;
+            background: rgba(58, 110, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            background: rgba(15, 25, 45, 0.6);
+            padding: 6px;
+            border-radius: 60px;
+        }
+        .nav-link {
+            padding: 0.7rem 1.6rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #b0c4ff;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .nav-link i { margin-right: 8px; }
+        .nav-link.active {
+            background: linear-gradient(95deg, #2a5cff, #1a3dbb);
+            color: white;
+            box-shadow: 0 4px 12px rgba(42, 92, 255, 0.3);
+        }
+
+        .library-icon {
+            cursor: pointer;
+            background: rgba(58, 110, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.5rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            margin-left: 1rem;
+        }
+        .library-icon:hover {
+            background: rgba(58, 110, 255, 0.4);
+        }
+
+        .hero {
+            padding: 4rem 0 3rem;
+            text-align: center;
+        }
+        .badge-hero {
+            display: inline-block;
+            background: rgba(58, 110, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(58, 110, 255, 0.4);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero h2 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #7aa2ff, #3a6eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #8da2d9;
+            max-width: 600px;
+            margin: 1.5rem auto 0;
+        }
+
+        .tabs-content { margin: 2rem 0 4rem; }
+        .tab-pane { display: none; animation: fadeUp 0.5s ease-out; }
+        .tab-pane.active-pane { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .section-header h3 { font-size: 2rem; font-weight: 700; }
+
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+        }
+        .mod-card {
+            background: rgba(12, 20, 35, 0.45);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            border: 1px solid rgba(58, 110, 255, 0.2);
+            transition: all 0.4s;
+            overflow: hidden;
+        }
+        .mod-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(58, 110, 255, 0.6);
+            background: rgba(18, 28, 48, 0.8);
+        }
+        .mod-visual {
+            height: 220px;
+            background: linear-gradient(135deg, #0f1a2f, #03070f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .mod-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .mod-visual i { font-size: 4.8rem; color: #3e70e6; }
+        .mod-info { padding: 1.6rem; }
+        .mod-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .mod-subtitle {
+            font-size: 0.7rem;
+            background: rgba(58,110,255,0.3);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .mod-desc {
+            font-size: 0.9rem;
+            color: #b2c4f0;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+        .mod-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #66dbff, #4a47ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .buy-btn, .download-btn {
+            background: linear-gradient(105deg, #2a5cff, #143d9e);
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .download-btn {
+            background: linear-gradient(105deg, #00b894, #00a884);
+        }
+        .owned-badge {
+            background: rgba(0, 184, 148, 0.3);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #00d68f;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        .announcements-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .news-card {
+            background: rgba(8, 16, 30, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(58, 110, 255, 0.25);
+            padding: 1.6rem 2rem;
+            transition: all 0.3s;
+        }
+        .news-card:hover {
+            transform: translateX(8px);
+            border-color: #3a6eff;
+        }
+        .news-date {
+            font-size: 0.8rem;
+            color: #7a9bff;
+            background: rgba(58, 110, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .news-title { font-size: 1.4rem; font-weight: 700; margin: 0.8rem 0; }
+        .news-desc { color: #baceff; line-height: 1.5; }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: rgba(10, 18, 35, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            border: 1px solid rgba(58, 110, 255, 0.5);
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            text-align: center;
+            animation: slideUpModal 0.3s ease;
+        }
+        @keyframes slideUpModal {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .telegram-link {
+            background: rgba(58, 110, 255, 0.2);
+            padding: 1rem;
+            border-radius: 60px;
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #5d8eff;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .modal-btn-primary {
+            background: linear-gradient(105deg, #2a5cff, #143d9e);
+            color: white;
+        }
+        .modal-btn-success {
+            background: linear-gradient(105deg, #00b894, #00a884);
+            color: white;
+        }
+        .modal-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .key-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(58, 110, 255, 0.5);
+            border-radius: 50px;
+            color: white;
+            font-family: monospace;
+            font-size: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .library-item {
+            background: rgba(58, 110, 255, 0.1);
+            border-radius: 20px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer {
+            border-top: 1px solid rgba(58, 110, 255, 0.2);
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .toast-modern {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 30, 55, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid #3a6eff;
+            border-radius: 60px;
+            padding: 12px 28px;
+            color: white;
+            font-weight: 500;
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @media (max-width: 800px) {
+            .container { padding: 0 1.2rem; }
+            .hero h2 { font-size: 2.4rem; }
+            .nav { flex-direction: column; gap: 12px; }
+            .mods-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="gradient-bg"></div>
+<div class="particles" id="particles"></div>
+
+<div class="container">
+    <div class="header">
+        <div class="nav">
+            <div class="logo">
+                <h1>GEMER PRESENTS</h1>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <div class="nav-links">
+                    <button class="nav-link active" data-tab="mods"><i class="fas fa-cube"></i> Mods</button>
+                    <button class="nav-link" data-tab="announcements"><i class="fas fa-rss"></i> Announcements</button>
+                </div>
+                <div class="library-icon" id="libraryIcon">
+                    <i class="fas fa-book-open"></i>
+                    <span>Моя библиотека</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h2>Purchase & Activate<br>Your Mods</h2>
+        <p>После оплаты вы получите ключ активации. Каждый ключ имеет ограничение по активациям!</p>
+    </div>
+
+    <div class="tabs-content">
+        <div id="modsPane" class="tab-pane active-pane">
+            <div class="section-header">
+                <h3><i class="fas fa-dice-d6"></i> Store</h3>
+            </div>
+            <div class="mods-grid" id="modsGrid"></div>
+        </div>
+
+        <div id="announcementsPane" class="tab-pane">
+            <div class="section-header">
+                <h3><i class="fas fa-broadcast-tower"></i> Inside Gemer</h3>
+                <div class="mod-stats">latest updates & drops</div>
+            </div>
+            <div class="announcements-grid" id="announcementsGrid"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="social-links" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+            <a href="https://t.me/MisterGemer" target="_blank" style="color: #8aa2dd; font-size: 1.4rem;"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p>© 2026 Gemer Presents. Contact: @MisterGemer</p>
+        <p style="margin-top: 8px; font-size: 0.75rem;">Каждый ключ имеет лимит активаций. После исчерпания лимита ключ становится недействительным.</p>
+    </footer>
+</div>
+
+<!-- Модалка "Напиши менеджеру" -->
+<div id="managerModal" class="modal">
+    <div class="modal-content">
+        <i class="fas fa-headset" style="font-size: 3rem; color: #5d8eff;"></i>
+        <h3>Для покупки мода</h3>
+        <p>Напишите менеджеру в Telegram для оформления заказа</p>
+        <div class="telegram-link">
+            <i class="fab fa-telegram"></i> @MisterGemer
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-primary" id="openTelegramBtn"><i class="fab fa-telegram"></i> Перейти в Telegram</button>
+            <button class="modal-btn modal-btn-secondary" id="closeManagerModal">Отмена</button>
+        </div>
+        <div style="margin-top: 1rem;">
+            <button class="modal-btn modal-btn-success" id="paidBtn"><i class="fas fa-check-circle"></i> Я оплатил(а), получить ключ</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка активации ключа -->
+<div id="activateModal" class="modal">
+    <div class="modal-content">
+        <i class="fas fa-key" style="font-size: 3rem; color: #ffd966;"></i>
+        <h3>Активация ключа</h3>
+        <p>Введите полученный ключ для активации мода</p>
+        <input type="text" id="keyInput" class="key-input" placeholder="XXXX-XXXX-XXXX-XXXX">
+        <div id="activateMessage"></div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-primary" id="activateKeyBtn"><i class="fas fa-unlock-alt"></i> Активировать</button>
+            <button class="modal-btn modal-btn-secondary" id="closeActivateModal">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка библиотеки -->
+<div id="libraryModal" class="modal">
+    <div class="modal-content" style="max-width: 550px;">
+        <h3><i class="fas fa-book-open"></i> Моя библиотека</h3>
+        <p>Активированные моды</p>
+        <div id="libraryList" style="margin: 1rem 0; max-height: 400px; overflow-y: auto;"></div>
+        <button class="modal-btn modal-btn-secondary" id="closeLibraryModal">Закрыть</button>
+    </div>
+</div>
+
+<script>
+    // Превью изображения для Towing Car
+    const towingCarPreview = "https://cdn.discordapp.com/attachments/1291442583033348119/1484895450124255302/ChatGPT_Image_21_._2026_._15_43_46.png?ex=69bfe427&is=69be92a7&hm=e6cc74595d12c6aa87c23f9b1dc220fd21517dfd7934a56fc5bcaf7a46e1ae47&";
+    const loadingScreenPreview = "https://cdn.discordapp.com/attachments/1291442583033348119/1484872046071648347/loadingscreen.png?ex=69bfce5b&is=69be7cdb&hm=8b25be05afe161c78e2ef24c030cf0a64e4346b64335e6d80cfc6159eb71c8f3&";
+    
+    // Ссылки на скачивание (MediaFire)
+    const towingCarDownloadLink = "https://www.mediafire.com/file/q2ug24e2q779wxg/qb-loading.zip/file";
+    const loadingScreenDownloadLink = "https://www.mediafire.com/file/706aqff52mtska7/towing-car.zip/file";
+    
+    // Структура модов: каждый мод имеет массив ключей, каждый ключ имеет лимит активаций
+    const modsCatalog = [
+        { 
+            id: 1, 
+            title: "ULTIMATE LOADING SCREEN", 
+            subtitle: "Загрузка для QBCORE",
+            desc: "Профессиональный экран загрузки для FiveM с анимированным фоном, прогресс-баром и полной интеграцией с QBCore. Поддержка Discord Rich Presence.", 
+            price: 1.79, 
+            priceFormatted: "$1.79", 
+            icon: "fa-spinner", 
+            hasImage: true, 
+            imageUrl: loadingScreenPreview,
+            downloadLink: loadingScreenDownloadLink,
+            keys: [
+                { key: "LOADI-LSG1-9F3K-7H2M", maxActivations: 1, used: 0 },
+                { key: "LOADI-LSZ2-4A8B-1C5D", maxActivations: 1, used: 0 },
+                { key: "LOADI-YONC-ERMR-1XQZ", maxActivations: 1, used: 0 },
+                { key: "LOADI-SER1-4A8B-1C5D", maxActivations: 1, used: 0 },
+                { key: "LOADI-GWQZ-VWQZ-GQZS", maxActivations: 1, used: 0 },
+                { key: "LOADI-LSP3-6E9F-2G7H", maxActivations: 1, used: 0 }
+            ]
+        },
+        { 
+            id: 2, 
+            title: "TOWING CAR", 
+            subtitle: "Тросс для QBCORE",
+            desc: "Полноценная система троса для FiveM. Поддержка QBCore.", 
+            price: 2.99, 
+            priceFormatted: "$2.99", 
+            icon: "fa-truck", 
+            hasImage: true, 
+            imageUrl: towingCarPreview,
+            downloadLink: towingCarDownloadLink,
+            keys: [
+                { key: "TOWIN-G23S-8H3K-9M2N", maxActivations: 1, used: 0 },
+                { key: "TOWIN-Z7GJ-5R7T-1U4V", maxActivations: 1, used: 0 },
+                { key: "TOWIN-H2CS-MQZ4-VH2Q", maxActivations: 1, used: 0 },
+                { key: "TOWIN-SVQZ-UIS1-ONE1", maxActivations: 1, used: 0 },
+                { key: "TOWIN-VQFV1-LDSZ-QZAD", maxActivations: 1, used: 0 },
+                { key: "TOWIN-K1S3-3W6X-8Y9Z", maxActivations: 1, used: 0 }
+            ]
+        }
+    ];
+
+    const newsFeed = [
+        { date: "21 MAR 2025", tag: "🔥 NEW RELEASE", title: "TOWING CAR — новая система троса!", desc: "Реалистичная физика буксировки, поддержка для QBCore. Уже в магазине!" },
+        { date: "18 MAR 2025", tag: "🔥 RELEASE", title: "ULTIMATE LOADING SCREEN QBCORE теперь доступен!", desc: "Самый крутой качественный современный экран загрузки для FiveM. Уже в магазине!" }
+    ];
+
+    // Активированные моды
+    let activatedMods = JSON.parse(localStorage.getItem('activatedMods') || '[]');
+    let usedKeys = JSON.parse(localStorage.getItem('usedKeys') || '{}');
+    let currentPendingMod = null;
+
+    function saveActivatedMods() {
+        localStorage.setItem('activatedMods', JSON.stringify(activatedMods));
+    }
+    
+    function saveUsedKeys() {
+        localStorage.setItem('usedKeys', JSON.stringify(usedKeys));
+    }
+    
+    function isModActivated(modId) {
+        return activatedMods.includes(modId);
+    }
+    
+    function activateKey(keyCode, modId) {
+        const mod = modsCatalog.find(m => m.id === modId);
+        if (!mod) return { success: false, message: "Мод не найден" };
+        
+        const keyData = mod.keys.find(k => k.key === keyCode);
+        if (!keyData) return { success: false, message: "Неверный ключ активации" };
+        
+        const usedCount = usedKeys[keyCode] || 0;
+        if (usedCount >= keyData.maxActivations) {
+            return { success: false, message: `Ключ исчерпал лимит активаций (${keyData.maxActivations}/${keyData.maxActivations})` };
+        }
+        
+        usedKeys[keyCode] = usedCount + 1;
+        saveUsedKeys();
+        
+        if (!activatedMods.includes(modId)) {
+            activatedMods.push(modId);
+            saveActivatedMods();
+        }
+        
+        const remaining = keyData.maxActivations - (usedCount + 1);
+        return { 
+            success: true, 
+            message: `✅ Мод "${mod.title}" успешно активирован! Осталось активаций на этом ключе: ${remaining}` 
+        };
+    }
+
+    function renderMods() {
+        const grid = document.getElementById('modsGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        modsCatalog.forEach(mod => {
+            const activated = isModActivated(mod.id);
+            const card = document.createElement('div');
+            card.className = 'mod-card';
+            
+            let visualContent = '';
+            if (mod.hasImage && mod.imageUrl) {
+                visualContent = `<img src="${mod.imageUrl}" alt="${mod.title}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas ${mod.icon}\' style=\'font-size:4.8rem;\'></i>'">`;
+            } else {
+                visualContent = `<i class="fas ${mod.icon}"></i>`;
+            }
+            
+            const subtitleHtml = mod.subtitle ? `<span class="mod-subtitle">${mod.subtitle}</span>` : '';
+            
+            let buttonHtml = '';
+            if (activated) {
+                if (mod.downloadLink && mod.downloadLink !== "#") {
+                    buttonHtml = `<a href="${mod.downloadLink}" target="_blank" class="download-btn" style="text-decoration: none;"><i class="fas fa-download"></i> Скачать</a>`;
+                } else {
+                    buttonHtml = `<button class="download-btn" data-mod-id="${mod.id}" data-mod-title="${mod.title}"><i class="fas fa-download"></i> Скачать</button>`;
+                }
+            } else {
+                buttonHtml = `<button class="buy-btn" data-mod-id="${mod.id}" data-mod-title="${mod.title}"><i class="fas fa-shopping-bag"></i> Купить</button>`;
+            }
+            
+            card.innerHTML = `
+                <div class="mod-visual">
+                    ${visualContent}
+                </div>
+                <div class="mod-info">
+                    <div class="mod-title">
+                        ${escapeHtml(mod.title)}
+                        ${subtitleHtml}
+                    </div>
+                    <div class="mod-desc">${escapeHtml(mod.desc)}</div>
+                    <div class="mod-footer">
+                        <span class="price">${escapeHtml(mod.priceFormatted)}</span>
+                        ${buttonHtml}
+                    </div>
+                    ${activated ? '<div class="owned-badge"><i class="fas fa-check-circle"></i> Активировано</div>' : ''}
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modId = parseInt(btn.getAttribute('data-mod-id'));
+                currentPendingMod = modsCatalog.find(m => m.id === modId);
+                openManagerModal();
+            });
+        });
+        
+        document.querySelectorAll('.download-btn:not(a)').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modTitle = btn.getAttribute('data-mod-title');
+                showToast(`📥 Начинается загрузка: ${modTitle}`);
+                setTimeout(() => {
+                    showToast(`✅ ${modTitle} готов к установке!`);
+                }, 1000);
+            });
+        });
+    }
+
+    function renderAnnouncements() {
+        const container = document.getElementById('announcementsGrid');
+        if (!container) return;
+        container.innerHTML = '';
+        newsFeed.forEach(item => {
+            const newsDiv = document.createElement('div');
+            newsDiv.className = 'news-card';
+            newsDiv.innerHTML = `
+                <div class="news-date"><i class="far fa-calendar-alt"></i> ${escapeHtml(item.date)}</div>
+                <div class="news-title">${escapeHtml(item.title)}</div>
+                <div class="news-desc">${escapeHtml(item.desc)}</div>
+            `;
+            container.appendChild(newsDiv);
+        });
+    }
+    
+    function renderLibrary() {
+        const libraryContainer = document.getElementById('libraryList');
+        if (!libraryContainer) return;
+        
+        const activatedModsList = modsCatalog.filter(mod => activatedMods.includes(mod.id));
+        
+        if (activatedModsList.length === 0) {
+            libraryContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: #8aa2dd;"><i class="fas fa-box-open"></i> У вас пока нет активированных модов</div>';
+            return;
+        }
+        
+        libraryContainer.innerHTML = activatedModsList.map(mod => {
+            const downloadButton = (mod.downloadLink && mod.downloadLink !== "#") 
+                ? `<a href="${mod.downloadLink}" target="_blank" class="download-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; text-decoration: none;"><i class="fas fa-download"></i> Скачать</a>`
+                : `<button class="download-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem;" data-mod-id="${mod.id}" data-mod-title="${mod.title}"><i class="fas fa-download"></i> Скачать</button>`;
+            
+            return `
+                <div class="library-item">
+                    <div>
+                        <strong><i class="fas ${mod.icon}"></i> ${escapeHtml(mod.title)}</strong>
+                        ${mod.subtitle ? `<div style="font-size: 0.75rem; color: #8aa2dd;">${mod.subtitle}</div>` : ''}
+                    </div>
+                    ${downloadButton}
+                </div>
+            `;
+        }).join('');
+        
+        document.querySelectorAll('#libraryList .download-btn:not(a)').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modTitle = btn.getAttribute('data-mod-title');
+                showToast(`📥 Загрузка: ${modTitle}`);
+            });
+        });
+    }
+    
+    function openManagerModal() {
+        document.getElementById('managerModal').classList.add('active');
+    }
+    
+    function closeManagerModal() {
+        document.getElementById('managerModal').classList.remove('active');
+    }
+    
+    function openActivateModal() {
+        closeManagerModal();
+        document.getElementById('keyInput').value = '';
+        document.getElementById('activateMessage').innerHTML = '';
+        document.getElementById('activateModal').classList.add('active');
+    }
+    
+    function closeActivateModal() {
+        document.getElementById('activateModal').classList.remove('active');
+    }
+    
+    function openLibraryModal() {
+        renderLibrary();
+        document.getElementById('libraryModal').classList.add('active');
+    }
+    
+    function closeLibraryModal() {
+        document.getElementById('libraryModal').classList.remove('active');
+    }
+    
+    function showToast(msg) {
+        const existing = document.querySelector('.toast-modern');
+        if(existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = 'toast-modern';
+        toast.innerHTML = `<i class="fas fa-info-circle" style="margin-right: 10px;"></i> ${msg}`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    function setupTabs() {
+        const modBtn = document.querySelector('[data-tab="mods"]');
+        const newsBtn = document.querySelector('[data-tab="announcements"]');
+        const modPane = document.getElementById('modsPane');
+        const newsPane = document.getElementById('announcementsPane');
+        
+        function switchTab(tabId) {
+            if (tabId === 'mods') {
+                modPane.classList.add('active-pane');
+                newsPane.classList.remove('active-pane');
+                modBtn.classList.add('active');
+                newsBtn.classList.remove('active');
+            } else {
+                newsPane.classList.add('active-pane');
+                modPane.classList.remove('active-pane');
+                newsBtn.classList.add('active');
+                modBtn.classList.remove('active');
+            }
+        }
+        modBtn.addEventListener('click', () => switchTab('mods'));
+        newsBtn.addEventListener('click', () => switchTab('announcements'));
+    }
+    
+    function initParticles() {
+        const container = document.getElementById('particles');
+        if(!container) return;
+        for(let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = Math.random() * 4 + 1 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.background = `rgba(58, 110, 255, ${Math.random() * 0.4 + 0.1})`;
+            particle.style.borderRadius = '50%';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.pointerEvents = 'none';
+            particle.style.filter = 'blur(1px)';
+            particle.style.animation = `floatParticle ${Math.random() * 20 + 12}s infinite linear`;
+            container.appendChild(particle);
+        }
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatParticle {
+                0% { transform: translateY(0px) translateX(0px); opacity: 0; }
+                15% { opacity: 0.6; }
+                85% { opacity: 0.6; }
+                100% { transform: translateY(-100vh) translateX(40px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Обработчики
+    document.getElementById('openTelegramBtn')?.addEventListener('click', () => {
+        window.open('https://t.me/MisterGemer', '_blank');
+    });
+    
+    document.getElementById('closeManagerModal')?.addEventListener('click', closeManagerModal);
+    document.getElementById('paidBtn')?.addEventListener('click', openActivateModal);
+    document.getElementById('closeActivateModal')?.addEventListener('click', closeActivateModal);
+    document.getElementById('libraryIcon')?.addEventListener('click', openLibraryModal);
+    document.getElementById('closeLibraryModal')?.addEventListener('click', closeLibraryModal);
+    
+    document.getElementById('activateKeyBtn')?.addEventListener('click', () => {
+        const key = document.getElementById('keyInput').value.trim().toUpperCase();
+        const messageDiv = document.getElementById('activateMessage');
+        
+        if (!key) {
+            messageDiv.innerHTML = '<div class="error-message" style="color: #ff6b6b;">Введите ключ активации</div>';
+            return;
+        }
+        
+        if (!currentPendingMod) {
+            messageDiv.innerHTML = '<div class="error-message" style="color: #ff6b6b;">Ошибка: выберите мод для активации</div>';
+            return;
+        }
+        
+        const result = activateKey(key, currentPendingMod.id);
+        
+        if (result.success) {
+            messageDiv.innerHTML = `<div class="success-message" style="color: #00d68f;">${result.message}</div>`;
+            renderMods();
+            setTimeout(() => {
+                closeActivateModal();
+                currentPendingMod = null;
+            }, 2000);
+        } else {
+            messageDiv.innerHTML = `<div class="error-message" style="color: #ff6b6b;">${result.message}</div>`;
+        }
+    });
+    
+    document.getElementById('managerModal')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('managerModal')) closeManagerModal();
+    });
+    document.getElementById('activateModal')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('activateModal')) closeActivateModal();
+    });
+    document.getElementById('libraryModal')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('libraryModal')) closeLibraryModal();
+    });
+    
+    renderMods();
+    renderAnnouncements();
+    setupTabs();
+    initParticles();
+</script>
+</body>
+</html>
